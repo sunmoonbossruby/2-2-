@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 여행 위시리스트 &amp; 여행 준비물</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #2a9d8f;
+    --primary-dark: #21867a;
+    --accent: #e76f51;
+    --bg: #f4f7f6;
+    --card-bg: #ffffff;
+    --text: #264653;
+    --muted: #6b7b82;
+    --border: #e0e6e5;
+  }
+
+  body {
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 16px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ===== 헤더 ===== */
+  header {
+    text-align: center;
+    padding: 28px 16px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border-radius: 18px;
+    margin-bottom: 24px;
+  }
+  header h1 { font-size: 1.6rem; margin-bottom: 8px; }
+  header p { font-size: 0.95rem; opacity: 0.95; }
+
+  /* ===== 섹션 공통 ===== */
+  section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-left: 10px;
+    border-left: 5px solid var(--primary);
+  }
+
+  /* ===== 여행지 카드 ===== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  }
+  .card .icon { font-size: 3rem; margin-bottom: 8px; }
+  .card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+  .card .info {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin: 4px 0;
+  }
+  .card .info strong { color: var(--text); }
+
+  /* ===== 체크리스트 ===== */
+  .counter {
+    background: var(--accent);
+    color: #fff;
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+  .category {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .category h3 {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    color: var(--primary-dark);
+  }
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    padding: 10px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .checklist li:hover { background: #f0f7f5; }
+  .checklist li .box {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #fff;
+    transition: background 0.15s ease;
+  }
+  .checklist li.checked .box {
+    background: var(--primary);
+  }
+  .checklist li.checked .label {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  /* ===== 외부 링크 버튼 ===== */
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .links a {
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.15s ease;
+  }
+  .links a:hover { background: var(--primary-dark); }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 24px;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.3rem; }
+    .section-title { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <header>
+    <h1>✈️ 나의 여행 위시리스트 &amp; 여행 준비물</h1>
+    <p>가고 싶은 여행지를 한눈에 보고, 준비물을 하나씩 체크해 보세요!</p>
+  </header>
+
+  <!-- 여행지 카드 -->
+  <section>
+    <h2 class="section-title">🌍 가고 싶은 여행지</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🗼</div>
+        <h3>파리 (프랑스)</h3>
+        <p class="info">💰 예상 예산: <strong>약 250만원</strong></p>
+        <p class="info">📅 추천 시기: <strong>4~6월 (봄)</strong></p>
+      </div>
+      <div class="card">
+        <div class="icon">⛩️</div>
+        <h3>교토 (일본)</h3>
+        <p class="info">💰 예상 예산: <strong>약 90만원</strong></p>
+        <p class="info">📅 추천 시기: <strong>11월 (단풍철)</strong></p>
+      </div>
+      <div class="card">
+        <div class="icon">🌴</div>
+        <h3>제주도 (대한민국)</h3>
+        <p class="info">💰 예상 예산: <strong>약 50만원</strong></p>
+        <p class="info">📅 추천 시기: <strong>9~10월 (가을)</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 체크리스트 -->
+  <section>
+    <h2 class="section-title">🧳 여행 준비물 체크리스트</h2>
+    <div class="counter" id="counter">0 / 0 개 완료</div>
+
+    <div class="category">
+      <h3>📄 서류 / 금융</h3>
+      <ul class="checklist">
+        <li><span class="box">✔</span><span class="label">여권 (유효기간 6개월 이상)</span></li>
+        <li><span class="box">✔</span><span class="label">항공권 / 숙소 예약 확인서</span></li>
+        <li><span class="box">✔</span><span class="label">여행자 보험</span></li>
+        <li><span class="box">✔</span><span class="label">환전 및 해외 결제 카드</span></li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <h3>🔌 전자기기</h3>
+      <ul class="checklist">
+        <li><span class="box">✔</span><span class="label">휴대폰 및 충전기</span></li>
+        <li><span class="box">✔</span><span class="label">보조배터리</span></li>
+        <li><span class="box">✔</span><span class="label">멀티 어댑터 (해외용)</span></li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <h3>💊 상비약 / 세면도구</h3>
+      <ul class="checklist">
+        <li><span class="box">✔</span><span class="label">상비약 (소화제, 진통제, 밴드)</span></li>
+        <li><span class="box">✔</span><span class="label">개인 세면도구 / 화장품</span></li>
+        <li><span class="box">✔</span><span class="label">선크림 / 상비 마스크</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 외부 링크 -->
+  <section>
+    <h2 class="section-title">🔗 예약 / 정보 사이트 바로가기</h2>
+    <div class="links">
+      <a href="https://www.google.com/flights" target="_blank" rel="noopener">✈️ 항공권 검색</a>
+      <a href="https://www.booking.com" target="_blank" rel="noopener">🏨 숙소 예약</a>
+      <a href="https://www.google.com/maps" target="_blank" rel="noopener">🗺️ 지도 / 길찾기</a>
+    </div>
+  </section>
+
+  <footer>
+    ※ 체크 상태는 브라우저를 닫으면 초기화됩니다.<br>
+    실제 예약·결제, 실시간 날씨·환율 정보는 제공하지 않습니다.
+  </footer>
+
+</div>
+
+<script>
+  // 모든 체크리스트 항목 선택
+  const items = document.querySelectorAll('.checklist li');
+  const counter = document.getElementById('counter');
+  const total = items.length;
+
+  // 완료 개수를 세어 카운터 갱신하는 함수
+  function updateCounter() {
+    const checked = document.querySelectorAll('.checklist li.checked').length;
+    counter.textContent = checked + ' / ' + total + ' 개 완료';
+  }
+
+  // 각 항목에 클릭(터치) 이벤트 연결
+  items.forEach(function(item) {
+    item.addEventListener('click', function() {
+      item.classList.toggle('checked'); // 체크 상태 토글
+      updateCounter();                   // 카운트 갱신
+    });
+  });
+
+  // 처음 화면이 뜰 때 카운터 초기화
+  updateCounter();
+</script>
+</body>
+</html>
